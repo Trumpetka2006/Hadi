@@ -1,5 +1,6 @@
 import random as rd
 import os
+import time
 
 class Game():
     gameboard = []
@@ -11,9 +12,11 @@ class Game():
             for x in range(10):
                 print(self.gameboard[(x + (10 * i))], end="")
             print()
+            time.sleep(0.05)
     def update(self):
         pass
     pass
+
 
 class Snake():
     linkA = 0
@@ -103,8 +106,11 @@ GameHandler.drawboard()
 #print(len(GameHandler.gameboard))
 #print(GameHandler.gameboard)
 
-while GameON:
-    GameON = False
+for i in range(10):
+    input()
+    os.system("clear")
+    Players[0].roll()
+    GameHandler.drawboard()
 
 
 
