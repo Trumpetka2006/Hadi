@@ -9,7 +9,7 @@ class Game():
     def drawboard(self):
         for i in range(10):
             for x in range(10):
-                print(self.gameboard[x + (10 * i)], end="")
+                print(self.gameboard[(x + (10 * i))], end="")
             print()
     def update(self):
         pass
@@ -20,7 +20,7 @@ class Snake():
     linkB = 0
     def __init__(self):
         self.linkA = rd.randint(0,98)
-        self.linkB = rd.randint(0,self.linkA)
+        self.linkB = rd.randint(0,self.linkA + 1)
         
 
 
@@ -39,7 +39,7 @@ class Ladder():
     linkB = 0
     def __init__(self):
         self.linkA = rd.randint(5,98)
-        self.linkB = rd.randint(self.linkA,97)
+        self.linkB = rd.randint(self.linkA - 1,97)
         
 
 
@@ -59,14 +59,21 @@ class Player():
     id = 0
     def __init__(self, ID):
         self.id = ID
-        Game.gameboard[0] += '[' + str(ID) + ']'
+        Game.gameboard[0] = '[' + str(ID) + ']'
     def roll(self):
+        self.oldPos = self.playerPos
+        roll = rd.randint(1,6)
+        if roll == 6:
+            roll += rd.randint(1,6)
+        self.playerPos += roll
+        Game.gameboard[self.playerPos] = '[' + str(self.id) + ']'
+        Game.gameboard[self.oldPos] = '[ ]'
         pass
         
 
 numberofsnakes = 5
 numberofladders = 5
-numberofplayers = 1
+numberofplayers = 3
 
 Snakes = []
 Ladders = []
@@ -89,7 +96,12 @@ for player in range(numberofplayers):
 
 os.system('clear')
 
+Players[0].roll()
+Players[1].roll()
 GameHandler.drawboard()
+
+#print(len(GameHandler.gameboard))
+#print(GameHandler.gameboard)
 
 while GameON:
     GameON = False
